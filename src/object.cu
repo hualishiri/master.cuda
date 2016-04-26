@@ -10,11 +10,12 @@
 /*
  * 本次的核函数，三个参数分别是两个NxN的输入矩阵和一个NxN的输出矩阵
  */
-__global__ void calculate_object(double x[][N],
-    double y[][N],
-    double z[][N],
-    double v[][N],
-    double a[][N],
+__global__ void calculate_object(
+    const double x[][N],
+    const double y[][N],
+    const double z[][N],
+    const double v[][N],
+    const double a[][N],
     double r_x[][N],
     double r_y[][N],
     double r_z[][N],
