@@ -11,12 +11,14 @@ void calculate_object(const double x[][N],
     const double v[][N],
     const double a[][N],
     const double *interval) {
-  for (int i=0; i!=N; ++i) {
-    for (int j=0; j!=N; ++j) {
-      double v_delt = a[i][j] * (*interval);
-      double v_new = v[i][j] + v_delt;
-      double s_new = v[i][j] * (*interval) +
-        a[i][j] * (*interval) * (*interval) / 2.0;
+  for (int k=0; k!=10000; ++k) {
+    for (int i=0; i!=N; ++i) {
+      for (int j=0; j!=N; ++j) {
+        double v_delt = a[i][j] * (*interval);
+        double v_new = v[i][j] + v_delt;
+        double s_new = v[i][j] * (*interval) +
+          a[i][j] * (*interval) * (*interval) / 2.0;
+      }
     }
   }
 }
