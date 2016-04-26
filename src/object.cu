@@ -24,11 +24,16 @@ __global__ void calculate_object(const double x[][N],
 }
 
 int main(void) {
+  time_t t;
+  struct timeval start, end;
+  double elapsed_time;
 
   double *h_x, *h_y, *h_z, *h_v, *h_a;
   double *dev_x, *dev_y, *dev_z, *dev_v, *dev_a;
   double *h_interval;
   double *dev_interval;
+
+  gettimeofday(&start, NULL);
 
   //这里把一个block的里面的线程排列定义成二维的，这样会有两个维度的索引值，x和y
   dim3 threads_in_block (N, N);
@@ -130,6 +135,12 @@ int main(void) {
 
   calculate_object<<<1, threads_in_block>>>((double (*)[N])dev_x, (double (*)[N])dev_y, (double (*)[N])dev_z,
       (double (*)[N])dev_v, (double (*)[N])dev_a, (double*)dev_interval);
+
+  gettimeofday(&end, NULL);
+  elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+  elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+
+  printf("dgemm finished in %f milliseconds.\n", elapsed_time);
 
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
     if (err != cudaSuccess) {
