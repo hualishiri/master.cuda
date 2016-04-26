@@ -90,7 +90,7 @@ int main(void) {
     h_v[i] = -1 * i + 4.0;
     h_a[i] = -1 * i + 8.0;
   }
-  h_interval = 3.0;
+  *h_interval = 3.0;
 
   err = cudaMemcpy(dev_x, h_x, sizeof(double) * N * N, cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
@@ -127,7 +127,7 @@ int main(void) {
   }
 
   calculate_object<<<1, threads_in_block>>>((double (*)[N])dev_x, (double (*)[N])dev_y, (double (*)[N])dev_z,
-      (double (*)[N])dev_v, (double (*)[N])dev_a, (double*)interval);
+      (double (*)[N])dev_v, (double (*)[N])dev_a, (double*)dev_interval);
 
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
   if (err != cudaSuccess) {
