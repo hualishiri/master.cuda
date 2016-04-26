@@ -15,7 +15,7 @@ __global__ void calculate_object(double x[][N],
     double z[][N],
     double v[][N],
     double a[][N],
-    double r_x[][N]
+    double r_x[][N],
     double r_y[][N],
     double r_z[][N],
     double r_v[][N],
