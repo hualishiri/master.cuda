@@ -176,8 +176,8 @@ int main(void) {
   host_calculate_object((double (*)[N])h_x, (double (*)[N])h_y, (double (*)[N])h_z,
       (double (*)[N])h_v, (double (*)[N])h_z, h_interval);
   gettimeofday(&host_end, NULL);
-  elapsed_time = (host_end.tv_sec - host_start.tv_sec) * 1000.0;
-  elapsed_time += (host_end.tv_usec - host_start.tv_usec) / 1000.0;
+  host_elapsed_time = (host_end.tv_sec - host_start.tv_sec) * 1000.0;
+  host_elapsed_time += (host_end.tv_usec - host_start.tv_usec) / 1000.0;
 
   printf("cuda finished in %f milliseconds.\n", elapsed_time);
   printf("host finished in %f milliseconds.\n", host_elapsed_time);
