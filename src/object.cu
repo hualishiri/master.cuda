@@ -25,9 +25,27 @@ __global__ void calculate_object(const double x[][N],
   }
 }
 
+__host__ void host_calculate_object(const double x[][N],
+    const double y[][N],
+    const double z[][N],
+    const double v[][N],
+    const double a[][N],
+    const double *interval) {
+  for (int k=0; k!=1000000; ++k) {
+    for (int i=0; i!=N; ++i) {
+      for (int j=0; j!=N; ++j) {
+        double v_delt = a[i][j] * (*interval);
+        double v_new = v[i][j] + v_delt;
+        double s_new = v[i][j] * (*interval) +
+          a[i][j] * (*interval) * (*interval) / 2.0;
+      }
+    }
+  }
+}
+
 int main(void) {
-  struct timeval start, end;
-  double elapsed_time;
+  struct timeval start, end, host_start, host_end;
+  double elapsed_time, host_elapsed_time;
 
   double *h_x, *h_y, *h_z, *h_v, *h_a;
   double *dev_x, *dev_y, *dev_z, *dev_v, *dev_a;
@@ -141,8 +159,6 @@ int main(void) {
   elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
   elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
 
-  printf("cuda finished in %f milliseconds.\n", elapsed_time);
-
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
     if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
@@ -155,6 +171,17 @@ int main(void) {
     return -1;
     }
     }*/
+
+  gettimeofday(&host_start, NULL);
+  host_calculate_object((double (*)[N])h_x, (double (*)[N])h_y, (double (*)[N])h_z,
+      (double (*)[N])h_v, (double (*)[N])h_z, h_interval);
+  gettimeofday(&host_end, NULL);
+  elapsed_time = (host_end.tv_sec - host_start.tv_sec) * 1000.0;
+  elapsed_time += (host_end.tv_usec - host_start.tv_usec) / 1000.0;
+
+  printf("cuda finished in %f milliseconds.\n", elapsed_time);
+  printf("host finished in %f milliseconds.\n", host_elapsed_time);
+  printf("speed up rate: %f\n", host_calculate_object/elapsed_time);
 
   printf("done.\n");
   return 0;
