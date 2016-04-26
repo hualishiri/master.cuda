@@ -33,17 +33,17 @@ int main(void) {
   //err这个值是用来检查cuda的函数是否正常运行的
   cudaError_t err = cudaSuccess;
 
-  h_a = (int *)malloc(sizeof(int) * N * N);
-  h_b = (int *)malloc(sizeof(int) * N * N);
-  h_c = (int *)malloc(sizeof(int) * N * N);
+  h_a = (double *)malloc(sizeof(double) * N * N);
+  h_b = (double *)malloc(sizeof(double) * N * N);
+  h_c = (double *)malloc(sizeof(double) * N * N);
 
-  h_x = (int *)malloc(sizeof(int) * N * N);
-  h_y = (int *)malloc(sizeof(int) * N * N);
-  h_z = (int *)malloc(sizeof(int) * N * N);
-  h_v = (int *)malloc(sizeof(int) * N * N);
-  h_a = (int *)malloc(sizeof(int) * N * N);
+  h_x = (double *)malloc(sizeof(double) * N * N);
+  h_y = (double *)malloc(sizeof(double) * N * N);
+  h_z = (double *)malloc(sizeof(double) * N * N);
+  h_v = (double *)malloc(sizeof(double) * N * N);
+  h_a = (double *)malloc(sizeof(double) * N * N);
 
-  h_interval = (int*)malloc(sizeof(int));
+  h_interval = (double*)malloc(sizeof(double));
   
   if (h_x == NULL || h_y == NULL || h_z == NULL
       || h_v == NULL || h_a == NULL) {
@@ -51,37 +51,37 @@ int main(void) {
     return -1;
   }
 
-  err = cudaMalloc((void **)&dev_x, sizeof(int) * N * N);
+  err = cudaMalloc((void **)&dev_x, sizeof(double) * N * N);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMalloc() failed.\n");
     return -1;
 
   }
-  err = cudaMalloc((void **)&dev_y, sizeof(int) * N * N);
+  err = cudaMalloc((void **)&dev_y, sizeof(double) * N * N);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMalloc() failed.\n");
     return -1;
   }
 
-  err = cudaMalloc((void **)&dev_z, sizeof(int) * N * N);
+  err = cudaMalloc((void **)&dev_z, sizeof(double) * N * N);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMalloc() failed.\n");
     return -1;
   }
 
-  err = cudaMalloc((void **)&dev_v, sizeof(int) * N * N);
+  err = cudaMalloc((void **)&dev_v, sizeof(double) * N * N);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMalloc() failed.\n");
     return -1;
   }
 
-  err = cudaMalloc((void **)&dev_a, sizeof(int) * N * N);
+  err = cudaMalloc((void **)&dev_a, sizeof(double) * N * N);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMalloc() failed.\n");
     return -1;
   }
 
-  err = cudaMalloc((void **)&dev_interval, sizeof(int));
+  err = cudaMalloc((void **)&dev_interval, sizeof(double));
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMalloc() failed.\n");
     return -1;
@@ -96,35 +96,35 @@ int main(void) {
   }
   h_interval = 3.0;
 
-  err = cudaMemcpy(dev_x, h_x, sizeof(int) * N * N, cudaMemcpyHostToDevice);
+  err = cudaMemcpy(dev_x, h_x, sizeof(double) * N * N, cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
   }
 
-  err = cudaMemcpy(dev_y, h_y, sizeof(int) * N * N, cudaMemcpyHostToDevice);
+  err = cudaMemcpy(dev_y, h_y, sizeof(double) * N * N, cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
   }
 
-  err = cudaMemcpy(dev_z, h_z, sizeof(int) * N * N, cudaMemcpyHostToDevice);
+  err = cudaMemcpy(dev_z, h_z, sizeof(double) * N * N, cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
   }
-  err = cudaMemcpy(dev_v, h_v, sizeof(int) * N * N, cudaMemcpyHostToDevice);
+  err = cudaMemcpy(dev_v, h_v, sizeof(double) * N * N, cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
   }
-  err = cudaMemcpy(dev_a, h_a, sizeof(int) * N * N, cudaMemcpyHostToDevice);
+  err = cudaMemcpy(dev_a, h_a, sizeof(double) * N * N, cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
   }
 
-  err = cudaMemcpy(dev_interval, h_interval, sizeof(int), cudaMemcpyHostToDevice);
+  err = cudaMemcpy(dev_interval, h_interval, sizeof(double), cudaMemcpyHostToDevice);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
@@ -133,7 +133,7 @@ int main(void) {
   calculate_object<<<1, threads_in_block>>>((int (*)[N])dev_x, (int (*)[N])dev_y, (int (*)[N])dev_z,
       int (*)[N]dev_v, int (*)[N]dev_a, int (*)inteval);
 
-  /*err = cudaMemcpy(h_c, dev_c, sizeof(int) * N * N, cudaMemcpyDeviceToHost);
+  /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
