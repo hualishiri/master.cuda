@@ -30,6 +30,7 @@ int main(void) {
   double *h_interval;
   double *dev_interval;
 
+  gettimeofday(&start, NULL);
 
   h_x = (double *)malloc(sizeof(double) * N * N);
   h_y = (double *)malloc(sizeof(double) * N * N);
@@ -50,4 +51,9 @@ int main(void) {
   *h_interval = 3.0;
   calculate_object((double (*)[N])h_x, (double (*)[N])h_y, (double (*)[N])h_z,
       (double (*)[N])h_v, (double (*)[N])h_z, h_interval);
+  gettimeofday(&end, NULL);
+  elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
+  elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
+
+  printf("dgemm finished in %f milliseconds.\n", elapsed_time);
 }
