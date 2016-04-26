@@ -3,7 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define N 32  //这里定义了矩阵的阶级，这里用一个32x32的方形矩阵做例子
+#define N 64  //这里定义了矩阵的阶级，这里用一个32x32的方形矩阵做例子
 
 void calculate_object(const double x[][N],
     const double y[][N],
@@ -11,7 +11,7 @@ void calculate_object(const double x[][N],
     const double v[][N],
     const double a[][N],
     const double *interval) {
-  for (int k=0; k!=10000; ++k) {
+  for (int k=0; k!=1000000; ++k) {
     for (int i=0; i!=N; ++i) {
       for (int j=0; j!=N; ++j) {
         double v_delt = a[i][j] * (*interval);
@@ -57,5 +57,5 @@ int main(void) {
   elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
   elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
 
-  printf("dgemm finished in %f milliseconds.\n", elapsed_time);
+  printf("basic finished in %f milliseconds.\n", elapsed_time);
 }

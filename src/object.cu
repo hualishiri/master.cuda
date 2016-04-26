@@ -18,7 +18,7 @@ __global__ void calculate_object(const double x[][N],
     const double *interval) {
   int idx = threadIdx.x;
   int idy = threadIdx.y;
-  for (int i=0; i!=10000; ++i) {
+  for (int i=0; i!=1000000; ++i) {
     double v_delt =  a[idx][idy] * (*interval);
     double v_new = v[idx][idy] + v_delt;
     double s_new = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)*(*interval) / 2.0;
@@ -141,7 +141,7 @@ int main(void) {
   elapsed_time = (end.tv_sec - start.tv_sec) * 1000.0;
   elapsed_time += (end.tv_usec - start.tv_usec) / 1000.0;
 
-  printf("dgemm finished in %f milliseconds.\n", elapsed_time);
+  printf("cuda finished in %f milliseconds.\n", elapsed_time);
 
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
     if (err != cudaSuccess) {
