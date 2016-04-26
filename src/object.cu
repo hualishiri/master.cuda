@@ -18,7 +18,7 @@ __global__ void calculate_object(const double x[][N],
     int idy = threadIdx.y;
     double v_delt =  a[idx][idy] * (*interval);
     double v_new = v[idx][idy] + v_delt;
-    double s_new = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)(*interval) / 2.0;
+    double s_new = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)*(*interval) / 2.0;
 }
 
 int main(void) {
@@ -127,7 +127,7 @@ int main(void) {
   }
 
   calculate_object<<<1, threads_in_block>>>((double (*)[N])dev_x, (double (*)[N])dev_y, (double (*)[N])dev_z,
-      double (*)[N]dev_v, double (*)[N]dev_a, double (*)interval);
+      (double (*)[N])dev_v, (double (*)[N])dev_a, (double*)interval);
 
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
   if (err != cudaSuccess) {
