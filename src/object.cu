@@ -25,9 +25,9 @@ __global__ void calculate_object(
   int idx = threadIdx.x;
   int idy = threadIdx.y;
   for (int i=0; i!=1000000; ++i) {
-    double r_a[idx][idy] =  a[idx][idy] * (*interval);
-    double r_v[idx][idy] = v[idx][idy] + a[idx][idy];
-    double r_x[idx][idy] = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)*(*interval) / 2.0;
+    r_a[idx][idy] =  a[idx][idy] * (*interval);
+    r_v[idx][idy] = v[idx][idy] + a[idx][idy];
+    r_x[idx][idy] = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)*(*interval) / 2.0;
   }
 }
 
