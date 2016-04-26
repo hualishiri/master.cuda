@@ -14,11 +14,13 @@ __global__ void calculate_object(const double x[][N],
     const double v[][N],
     const double a[][N],
     const double *interval) {
-    int idx = threadIdx.x;
-    int idy = threadIdx.y;
+  int idx = threadIdx.x;
+  int idy = threadIdx.y;
+  for (int i=0; i!=10000; ++i) {
     double v_delt =  a[idx][idy] * (*interval);
     double v_new = v[idx][idy] + v_delt;
     double s_new = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)*(*interval) / 2.0;
+  }
 }
 
 int main(void) {
@@ -40,7 +42,7 @@ int main(void) {
   h_a = (double *)malloc(sizeof(double) * N * N);
 
   h_interval = (double*)malloc(sizeof(double));
-  
+
   if (h_x == NULL || h_y == NULL || h_z == NULL
       || h_v == NULL || h_a == NULL) {
     fprintf(stderr, "Malloc() failed.\n");
@@ -130,17 +132,17 @@ int main(void) {
       (double (*)[N])dev_v, (double (*)[N])dev_a, (double*)dev_interval);
 
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
-  if (err != cudaSuccess) {
+    if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
-  }
-
-  for (int i = 0; i < N * N; i++) {
-    if (h_a[i] + h_b[i] != h_c[i]) {
-      fprintf(stderr, "a[%d]%d + b[%d]%d != c[%d]%d.\n", i, h_a[i], i, h_b[i], i, h_c[i]);
-      return -1;
     }
-  }*/
+
+    for (int i = 0; i < N * N; i++) {
+    if (h_a[i] + h_b[i] != h_c[i]) {
+    fprintf(stderr, "a[%d]%d + b[%d]%d != c[%d]%d.\n", i, h_a[i], i, h_b[i], i, h_c[i]);
+    return -1;
+    }
+    }*/
 
   printf("done.\n");
   return 0;
