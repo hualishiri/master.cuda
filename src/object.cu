@@ -181,7 +181,7 @@ int main(void) {
 
   printf("cuda finished in %f milliseconds.\n", elapsed_time);
   printf("host finished in %f milliseconds.\n", host_elapsed_time);
-  printf("speed up rate: %f\n", host_calculate_object/elapsed_time);
+  printf("speed up rate: %f\n", host_elapsed_time / elapsed_time);
 
   printf("done.\n");
   return 0;
