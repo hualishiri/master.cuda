@@ -3,7 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define N 64  //这里定义了矩阵的阶级，这里用一个32x32的方形矩阵做例子
+#define N 32  //这里定义了矩阵的阶级，这里用一个32x32的方形矩阵做例子
 
 void calculate_object(const double x[][N],
     const double y[][N],
