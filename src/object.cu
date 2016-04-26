@@ -1,6 +1,7 @@
 //matrix_add.cu
 //这个文件不推荐直接拷贝，最好一行一行地抄下来
 #include <stdio.h>
+#include <sys/time.h>
 #include <time.h>
 
 #define N 32  //这里定义了矩阵的阶级，这里用一个32x32的方形矩阵做例子
@@ -25,7 +26,6 @@ __global__ void calculate_object(const double x[][N],
 }
 
 int main(void) {
-  time_t t;
   struct timeval start, end;
   double elapsed_time;
 
