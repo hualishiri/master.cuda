@@ -36,7 +36,7 @@ __host__ void host_calculate_object(double x[][N],
     double z[][N],
     double v[][N],
     double a[][N],
-    double r_x[][N]
+    double r_x[][N],
     double r_y[][N],
     double r_z[][N],
     double r_v[][N],
@@ -46,8 +46,8 @@ __host__ void host_calculate_object(double x[][N],
     for (int i=0; i!=N; ++i) {
       for (int j=0; j!=N; ++j) {
         r_a[i][j] = a[i][j] * (*interval);
-        double r_v[i][j] = v[i][j] + r_a[i][j];
-        double r_x[i][j] = v[i][j] * a[i][j] +
+        r_v[i][j] = v[i][j] + r_a[i][j];
+        r_x[i][j] = v[i][j] * a[i][j] +
           a[i][j] * (*interval) * (*interval) / 2.0;
       }
     }
