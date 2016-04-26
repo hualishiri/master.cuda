@@ -33,10 +33,6 @@ int main(void) {
   //err这个值是用来检查cuda的函数是否正常运行的
   cudaError_t err = cudaSuccess;
 
-  h_a = (double *)malloc(sizeof(double) * N * N);
-  h_b = (double *)malloc(sizeof(double) * N * N);
-  h_c = (double *)malloc(sizeof(double) * N * N);
-
   h_x = (double *)malloc(sizeof(double) * N * N);
   h_y = (double *)malloc(sizeof(double) * N * N);
   h_z = (double *)malloc(sizeof(double) * N * N);
@@ -130,8 +126,8 @@ int main(void) {
     return -1;
   }
 
-  calculate_object<<<1, threads_in_block>>>((int (*)[N])dev_x, (int (*)[N])dev_y, (int (*)[N])dev_z,
-      int (*)[N]dev_v, int (*)[N]dev_a, int (*)inteval);
+  calculate_object<<<1, threads_in_block>>>((double (*)[N])dev_x, (double (*)[N])dev_y, (double (*)[N])dev_z,
+      double (*)[N]dev_v, double (*)[N]dev_a, double (*)interval);
 
   /*err = cudaMemcpy(h_c, dev_c, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
   if (err != cudaSuccess) {
