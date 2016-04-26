@@ -240,7 +240,7 @@ int main(void) {
     return -1;
   }
 
-  err = cudaMemcpy(h_r_interval,dev_r_interval, sizeof(double), cudaMemcpyDeviceToHost);
+  err = cudaMemcpy(h_interval,dev_interval, sizeof(double), cudaMemcpyDeviceToHost);
   if (err != cudaSuccess) {
     fprintf(stderr, "cudaMemcpy() failed.\n");
     return -1;
