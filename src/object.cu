@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <time.h>
+#include <math.h>
 
+#include M_PI 3.14151629
 #define N 32  //这里定义了矩阵的阶级，这里用一个32x32的方形矩阵做例子
 //想要自己Debug的时候，遇到问题，可以先把N的值设置小一些，比如4
 
@@ -28,6 +30,10 @@ __global__ void calculate_object(
     r_a[idx][idy] =  a[idx][idy] * (*interval);
     r_v[idx][idy] = v[idx][idy] + a[idx][idy];
     r_x[idx][idy] = v[idx][idy] * (*interval) + a[idx][idy]*(*interval)*(*interval) / 2.0;
+
+    r_y[idx][idy] = x[idx][idy] * cos(M_PI / 4.0) + y[idx][idy] * sin(M_PI / 4.0);
+    r_x[idx][idy] = x[idx][idy] * cos(M_PI / 4.0) + y[idx][idy] * sin(M_PI / 4.0);
+    r_z[idx][idy] = x[idx][idy] * cos(M_PI / 4.0) + y[idx][idy] * sin(M_PI / 4.0);
   }
 }
 
@@ -210,7 +216,6 @@ int main(void) {
       (double (*)[N])dev_r_v,
       (double (*)[N])dev_r_a,
       (double*)dev_interval);
-
 
   err = cudaMemcpy(h_r_x,dev_r_x, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
   if (err != cudaSuccess) {
